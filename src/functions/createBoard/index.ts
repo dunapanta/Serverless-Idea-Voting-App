@@ -1,8 +1,11 @@
 import { APIGatewayProxyEvent } from 'aws-lambda';
+import { v4 as uuid } from 'uuid';
+
 import { formatJSONResponse } from '@libs/APIResponses';
 import Dynamo from '@libs/Dynamo';
 import { CreateBoardBody } from 'src/types/apiTypes';
 import { BoardRecord } from 'src/types/dynamo';
+import { getUserId } from '@libs/APIGateway';
 
 export const handler = async (event: APIGatewayProxyEvent) => {
   try {
@@ -14,11 +17,23 @@ export const handler = async (event: APIGatewayProxyEvent) => {
       return validationError;
     }
 
-    const { name, description, isPublic } = body as CreateBoardBody;
+    const { name, description, isPublic = false } = body as CreateBoardBody;
 
-    const data: BoardRecord = {};
+    const data: BoardRecord = {
+      id: uuid(),
+      pk: 'board',
+      sk: Date.now().toString(),
 
-    return formatJSONResponse({ body: { message: 'flight successfully booked' } });
+      ownerId: getUserId(event),
+      boardName: name,
+      description: description,
+      isPublic: isPublic,
+      date: Date.now(),
+    };
+
+    await Dynamo.write({ data, tableName });
+
+    return formatJSONResponse({ body: { message: 'Board Created', id: data.id } });
   } catch (error) {
     return formatJSONResponse({ statusCode: 500, body: error.message });
   }

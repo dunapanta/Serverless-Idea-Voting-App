@@ -13,7 +13,8 @@
     "@aws-sdk/client-dynamodb": "^3.75.0",
     "@aws-sdk/lib-dynamodb": "^3.75.0",
     "csvtojson": "^2.0.10",
-    "source-map-support": "^0.5.19"
+    "source-map-support": "^0.5.19",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@serverless/typescript": "^3.0.0",
