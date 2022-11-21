@@ -1,7 +1,7 @@
 import type { AWS } from '@serverless/typescript';
 
 const DynamoResources: AWS['resources']['Resources'] = {
-  configurationsTable: {
+  ideasTable: {
     Type: 'AWS::DynamoDB::Table',
     Properties: {
       TableName: '${self:custom.tables.singleTable}',
