@@ -33,7 +33,7 @@ const serverlessConfiguration: AWS = {
     name: 'aws',
     runtime: 'nodejs16.x',
     profile: '${self:custom.profile.${sls:stage}}',
-    region: 'eu-central-1',
+    region: 'us-east-1',
     apiGateway: {
       minimumCompressionSize: 1024,
       shouldStartNameWithService: true,

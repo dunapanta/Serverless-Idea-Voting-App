@@ -21,7 +21,7 @@ const isTest = process.env.JEST_WORKER_ID;
 const isServerlessOffline = process.env.IS_OFFLINE;
 const config = {
   convertEmptyValues: true,
-  region: process.env.region || 'eu-central-1',
+  region: process.env.region || 'us-east-1',
   ...(isTest && {
     endpoint: 'http://localhost:8000',
     sslEnabled: false,
