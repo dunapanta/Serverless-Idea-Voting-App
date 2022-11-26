@@ -3,9 +3,9 @@ import { v4 as uuid } from 'uuid';
 
 import { formatJSONResponse } from '@libs/APIResponses';
 import Dynamo from '@libs/Dynamo';
+import { getUserId } from '@libs/APIGateway';
 import { CreateBoardBody } from 'src/types/apiTypes';
 import { BoardRecord } from 'src/types/dynamo';
-import { getUserId } from '@libs/APIGateway';
 
 export const handler = async (event: APIGatewayProxyEvent) => {
   try {

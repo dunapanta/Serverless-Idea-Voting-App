@@ -1,21 +1,3 @@
-## Idea Voting App Clase 7 Create Board - endpoint and code
-
-- En `functions.ts` definimos las funciones con `http` porque ahora se utiliza coginito
-
-## Idea Voting App Clase 8 Create Board - endpoint and code 2
-
-- Create subscriber of the authorizer (User Id of Cogniito)
-
-```
-import { APIGatewayProxyEvent } from 'aws-lambda';
-
-export const getUserId = (event: APIGatewayProxyEvent) => {
-  return event.requestContext?.authorizer?.claims?.sub;
-};
-```
-## Idea Voting App Clase 9 List Boards
-- Add get Boards
-```
 import { APIGatewayProxyEvent } from 'aws-lambda';
 
 import { formatJSONResponse } from '@libs/APIResponses';
@@ -43,5 +25,3 @@ export const handler = async (event: APIGatewayProxyEvent) => {
     return formatJSONResponse({ statusCode: 500, body: error.message });
   }
 };
-
-```
