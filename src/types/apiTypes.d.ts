@@ -3,3 +3,9 @@ export interface CreateBoardBody {
   description?: string;
   isPublic?: boolean;
 }
+
+export interface CreateIdeaBody {
+  title: string;
+  description?: string;
+  boardId: string;
+}
