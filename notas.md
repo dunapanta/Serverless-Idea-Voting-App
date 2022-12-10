@@ -155,3 +155,21 @@ export default cognitoResorces;
     },
   },
 ```
+
+## Idea Voting App Clase 16 Update API's to use Cognito Authentication
+- En `functions.ts`
+```
+interface Authorizer {
+  name: string;
+  type: string;
+  arn: {
+    'Fn::GetAtt': string[];
+  };
+}
+const authorizer: Authorizer = {
+  name: 'authorizer',
+  type: 'COGNITO_USER_POOLS',
+  arn: { 'Fn::GetAtt': ['CognitoUserPool', 'Arn'] },
+};
+
+```
