@@ -44,7 +44,9 @@ export const handler = async (event: APIGatewayProxyEvent) => {
       };
     });
 
-    const ideaDataArray = await Promise.all(ideaDataPromiseArray);
+    const ideaDataArray = (await Promise.all(ideaDataPromiseArray)).sort(
+      (a, b) => a.votes - b.votes
+    );
 
     return formatJSONResponse({ body: { ...responseData, ideas: ideaDataArray } });
   } catch (error) {
