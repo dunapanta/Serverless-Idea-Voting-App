@@ -100,3 +100,58 @@ const validateBody = (body: Record<string, any>) => {
 };
 
 ```
+
+## Idea Voting App Clase 15 Add Cognito to Serverless Project
+- Create a new file `cognito.ts` inside `serverless` 
+```
+import type { AWS } from '@serverless/typescript';
+
+const cognitoResorces: AWS['resources']['Resources'] = {
+  CognitoUserPool: {
+    Type: 'AWS::Cognito::UserPool',
+    Properties: {
+      UserPoolName: '${sls:stage}-${self:service}-user-pool',
+      UsernameAttributes: ['email'],
+      AutoVerifiedAttributes: ['email'],
+    },
+  },
+  CognitoUserPoolClient: {
+    Type: 'AWS::Cognito::UserPoolClient',
+    Properties: {
+      ClientName: '${sls:stage}-${self:service}-user-pool-client',
+      UserPoolId: {
+        Ref: 'CognitoUserPool',
+      },
+      ExplicitAuthFlows: ['ADMIN_NO_SRP_AUTH'],
+      GenerateSecret: false,
+    },
+  },
+};
+
+export default cognitoResorces;
+
+```
+- On `serverless.ts
+```
+  Resources: {
+      ...DynamoResources,
+      ...cognitoResources,
+    },
+    Outputs: {
+      DynamoTableName: {
+        Value: '${self:custom.tables.singleTable}',
+        Export: {
+          Name: 'DynamoTableName',
+        },
+      },
+      CognitoUserPoolId: {
+        Value: {
+          Ref: 'CognitoUserPool',
+        },
+        Export: {
+          Name: '${sls:stage}-${self:service}-user-pool-id',
+        },
+      },
+    },
+  },
+```
